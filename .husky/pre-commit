@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# expect the following env var: `npm_lifecycle_event=precommit` or `npm_lifecycle_event=commit`
+# if not matching, fail with message;
+#   "Please use `pnpm commit` instead of `git commit` to create commits"
+if [ "$npm_lifecycle_event" != "precommit" ] && [ "$npm_lifecycle_event" != "commit" ]; then
+  echo "Please use \`pnpm commit\` instead of \`git commit\` to create commits"
+  exit 1
+fi
+
+# if is commit, exit 0 (precommit already checked this)
+if [ "$npm_lifecycle_event" = "commit" ]; then
+  exit 0
+fi
+
+echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+echo "#                     BUILD AND TESTS                     #"
+echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+pnpm build
+pnpm test

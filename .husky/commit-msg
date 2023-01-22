@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo ""
+echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+echo "#                       COMMIT LINT                       #"
+echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+npx --no -- commitlint --edit ${1}
